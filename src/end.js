@@ -12,6 +12,7 @@ username.addEventListener("keyup", () => {
 });
 
 let saveHighScore = (e) => {
+  // e.preventDefault();
   const score = {
     score: mostRecentScore,
     name: username.value
@@ -26,4 +27,4 @@ let saveHighScore = (e) => {
   //  window.location.assign("/");
 };
 
-saveHighScore();
+saveScoreBtn.addEventListener("click", saveHighScore());

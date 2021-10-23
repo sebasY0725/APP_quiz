@@ -9,38 +9,45 @@ let score = 0;
 let questionCounter = 0;
 let availabeQuestions = [];
 
-let questions = [
-  {
-    question: "Dentro de que HTML ponemos el JavaScript? ",
-    choice1: "<script>",
-    choice2: "<javascript>",
-    choice3: "<js>",
-    choice4: "<scripting>",
-    answer: 1
-  },
-  {
-    question:
-      "Cual es la sintaxis correcta para referirse a un script externo llamado algo.js?? ",
-    choice1: "<script href= 'algo.js'>",
-    choice2: "<script name= 'algo.js'>",
-    choice3: "<script src= 'algo.js'>",
-    choice4: "<script file= 'algo.js'>",
-    answer: 3
-  },
-  {
-    question: "Como escribes 'Hola mundo' en una caja de alerta'? ",
-    choice1: "msgBox('Hola mundo');",
-    choice2: "alertBox('Hola mundo');",
-    choice3: "msg('Hola mundo');",
-    choice4: "alert('Hola mundo');",
-    answer: 4
-  }
-];
+let questions = [];
+
+// api
+async function getQuestions() {
+  await fetch("https://opentdb.com/api.php?amount=5&category=20&type=multiple")
+    .then((res) => {
+      return res.json();
+    })
+    .then((loadedQuestions) => {
+      questions = loadedQuestions.results.map((loadedQuestion) => {
+        const formattedQuestion = {
+          question: loadedQuestion.question
+        };
+
+        const answerChoices = [...loadedQuestions.incorrect_answers];
+        formattedQuestion.answer = Math.floor(Math.random() * 5 + 1);
+        answerChoices.splice(
+          formattedQuestion.answer - 1,
+          0,
+          loadedQuestions.correct_answer
+        );
+
+        answerChoices.forEach((choice, index) => {
+          formattedQuestion["choice" + (index + 1)] = choice;
+        });
+        return formattedQuestion;
+      });
+      //  startGame();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
 // constantes
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 5;
 
-const startGame = () => {
+const startGame = async () => {
+  await getQuestions();
   questionCounter = 0;
   score = 0;
   availabeQuestions = [...questions];

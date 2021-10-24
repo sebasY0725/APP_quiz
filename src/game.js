@@ -1,4 +1,4 @@
-const question = document.getElementById("question");
+let question = document.getElementById("question");
 const choices = Array.from(document.getElementsByClassName("choice-text"));
 const progressText = document.getElementById("progressText");
 const scoreText = document.getElementById("score");
@@ -11,43 +11,43 @@ let availabeQuestions = [];
 
 let questions = [];
 
-// api
-async function getQuestions() {
-  await fetch("https://opentdb.com/api.php?amount=5&category=20&type=multiple")
-    .then((res) => {
-      return res.json();
-    })
-    .then((loadedQuestions) => {
-      questions = loadedQuestions.results.map((loadedQuestion) => {
-        const formattedQuestion = {
-          question: loadedQuestion.question
-        };
+fetch("https://opentdb.com/api.php?amount=5&category=21&type=multiple")
+  .then((res) => {
+    return res.json();
+  })
+  .then((loadedQuestions) => {
+    console.log(loadedQuestions.results);
+    questions = loadedQuestions.results.map((loadedQuestion) => {
+      const formattedQuestion = {
+        question: loadedQuestion.question
+      };
+      questions.push(formattedQuestion.question);
+      console.log(questions);
+      const answerChoices = [...loadedQuestion.incorrect_answers];
+      formattedQuestion.answer = Math.floor(Math.random() * 5 + 1);
+      answerChoices.splice(
+        formattedQuestion.answer - 1,
+        0,
+        loadedQuestion.correct_answer
+      );
 
-        const answerChoices = [...loadedQuestions.incorrect_answers];
-        formattedQuestion.answer = Math.floor(Math.random() * 5 + 1);
-        answerChoices.splice(
-          formattedQuestion.answer - 1,
-          0,
-          loadedQuestions.correct_answer
-        );
-
-        answerChoices.forEach((choice, index) => {
-          formattedQuestion["choice" + (index + 1)] = choice;
-        });
-        return formattedQuestion;
+      answerChoices.forEach((choice, index) => {
+        formattedQuestion["choice" + (index + 1)] = choice;
       });
-      //  startGame();
-    })
-    .catch((err) => {
-      console.error(err);
+      return formattedQuestion;
     });
-}
+    // questions= loadedQuestions;
+    startGame();
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 // constantes
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 5;
 
-const startGame = async () => {
-  await getQuestions();
+let startGame = () => {
   questionCounter = 0;
   score = 0;
   availabeQuestions = [...questions];
@@ -103,5 +103,3 @@ const incrementScore = (num) => {
   score += num;
   scoreText.innerText = score;
 };
-
-startGame();

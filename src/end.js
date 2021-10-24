@@ -6,12 +6,14 @@ finalScore.innerText = mostRecentScore;
 
 const MAX_HIGH_SCORES = 5;
 const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-finalScore.innerText = mostRecentScore;
+console.log(finalScore.innerText);
+
+console.log(mostRecentScore);
 username.addEventListener("keyup", () => {
-  // saveScoreBtn.disabled = !username.nodeValue;
+  // saveScoreBtn.disabled = !username.value;
 });
 
-let saveHighScore = (e) => {
+/*let saveHighScore = (e) => {
   // e.preventDefault();
   const score = {
     score: mostRecentScore,
@@ -24,7 +26,24 @@ let saveHighScore = (e) => {
   highScores.splice(10);
   localStorage.setItem("highScores", JSON.stringify(highScores));
   console.log("Saved");
+  
   //  window.location.assign("/");
-};
+}; */
 
-saveScoreBtn.addEventListener("click", saveHighScore());
+//saveScoreBtn.
+document.getElementById("saveScoreBtn").addEventListener("click", (e) => {
+  // e.preventDefault();
+  const score = {
+    score: mostRecentScore,
+    name: username.value
+  };
+  highScores.push(score);
+  highScores.sort((a, b) => {
+    return b.score - a.score;
+  });
+  highScores.splice(10);
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  console.log("Saved");
+
+  // window.location.assign("/");
+});

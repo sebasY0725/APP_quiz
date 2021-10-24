@@ -141,6 +141,8 @@ h3 {
   height: 4rem;
   height: 0.3rem solid #eb7373;
   margin-top: 1.5rem;
+  border-color: #333;
+  border: solid;
 }
 #progressBarFull {
   height: 3.4rem;

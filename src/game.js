@@ -54,7 +54,7 @@ let startGame = () => {
   getNewQuestion();
 };
 
-const getNewQuestion = () => {
+let getNewQuestion = () => {
   if (availabeQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     localStorage.setItem("mostRecentScore", score);
     // debe enviarlo a la pagina final
@@ -91,6 +91,8 @@ choices.forEach((choice) => {
 
     if (classToApply == "correct") {
       incrementScore(CORRECT_BONUS);
+    } else {
+      window.location.assign("/");
     }
     selectedChoice.parentElement.classList.add(classToApply);
     setTimeout(() => {

@@ -40,6 +40,7 @@ h3 {
   align-items: center;
   max-width: 80rem;
   padding: 2rem;
+  margin: 0 auto;
 }
 .container > * {
   width: 100%;
@@ -65,7 +66,23 @@ h3 {
 }
 
 /* botones */
-
+#btn {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+  width: 20rem;
+  text-align: center;
+  border: 0.1rem solid #eb7373;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #eb7373;
+  background-color: white;
+}
+#btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem #eb7373;
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
+}
 .btn {
   font-size: 1.8rem;
   padding: 1rem 0;

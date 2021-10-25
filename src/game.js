@@ -3,6 +3,7 @@ const choices = Array.from(document.getElementsByClassName("choice-text"));
 const progressText = document.getElementById("progressText");
 const scoreText = document.getElementById("score");
 const progressBarFull = document.getElementById("progressBarFull");
+const buttonMain = document.getElementById("btn");
 let currentQuestion = {};
 let acceptingAnswers = true;
 let score = 0;
@@ -11,18 +12,18 @@ let availabeQuestions = [];
 
 let questions = [];
 
-fetch("https://opentdb.com/api.php?amount=5&category=21&type=multiple")
+fetch("https://opentdb.com/api.php?amount=25&type=multiple")
   .then((res) => {
     return res.json();
   })
   .then((loadedQuestions) => {
-    console.log(loadedQuestions.results);
+    // console.log(loadedQuestions.results);
     questions = loadedQuestions.results.map((loadedQuestion) => {
       const formattedQuestion = {
         question: loadedQuestion.question
       };
       questions.push(formattedQuestion.question);
-      console.log(questions);
+      // console.log(questions);
       const answerChoices = [...loadedQuestion.incorrect_answers];
       formattedQuestion.answer = Math.floor(Math.random() * 5 + 1);
       answerChoices.splice(
@@ -57,10 +58,10 @@ let startGame = () => {
 let getNewQuestion = () => {
   if (availabeQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     localStorage.setItem("mostRecentScore", score);
+
     // debe enviarlo a la pagina final
     return window.location.assign("./end.html");
   }
-
   questionCounter++;
   progressText.innerText = `Pregunta${questionCounter}/${MAX_QUESTIONS}`;
   // hora de actualizar la barra de progreso
@@ -79,6 +80,11 @@ let getNewQuestion = () => {
 
   acceptingAnswers = true;
 };
+const incrementScore = (num) => {
+  score += num;
+  console.log(score);
+  scoreText.innerText = score;
+};
 choices.forEach((choice) => {
   choice.addEventListener("click", (e) => {
     if (!acceptingAnswers) return;
@@ -92,7 +98,7 @@ choices.forEach((choice) => {
     if (classToApply == "correct") {
       incrementScore(CORRECT_BONUS);
     } else {
-      window.location.assign("/");
+      //  window.location.assign("/");
     }
     selectedChoice.parentElement.classList.add(classToApply);
     setTimeout(() => {
@@ -101,7 +107,8 @@ choices.forEach((choice) => {
     }, 1000);
   });
 });
-const incrementScore = (num) => {
-  score += num;
-  scoreText.innerText = score;
-};
+
+buttonMain.addEventListener("click", () => {
+  localStorage.setItem("mostRecentScore", score);
+  window.location.assign("/end.html");
+});

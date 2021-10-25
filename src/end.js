@@ -1,17 +1,18 @@
 const username = document.getElementById("username");
 const saveScoreBtn = document.getElementById("saveScoreBtn");
-const finalScore = document.getElementById("finalScore");
+const score = document.getElementById("score");
 const mostRecentScore = localStorage.getItem("mostRecentScore");
-finalScore.innerText = mostRecentScore;
+const finalScore = document.getElementById("finalScore");
 
 const MAX_HIGH_SCORES = 5;
 const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-console.log(finalScore.innerText);
+console.log(localStorage);
 
-console.log(mostRecentScore);
-username.addEventListener("keyup", () => {
-  // saveScoreBtn.disabled = !username.value;
-});
+finalScore.innerText = mostRecentScore;
+
+// username.addEventListener("keyup", () => {
+// saveScoreBtn.disabled = !username.value;
+// });
 
 /*let saveHighScore = (e) => {
   // e.preventDefault();
@@ -44,6 +45,5 @@ document.getElementById("saveScoreBtn").addEventListener("click", (e) => {
   highScores.splice(10);
   localStorage.setItem("highScores", JSON.stringify(highScores));
   console.log("Saved");
-
   // window.location.assign("/");
 });

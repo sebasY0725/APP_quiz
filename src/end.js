@@ -45,5 +45,6 @@ document.getElementById("saveScoreBtn").addEventListener("click", (e) => {
   highScores.splice(10);
   localStorage.setItem("highScores", JSON.stringify(highScores));
   console.log("Saved");
+  finalScore.innerText = "0";
   // window.location.assign("/");
 });

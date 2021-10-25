@@ -98,7 +98,7 @@ choices.forEach((choice) => {
     if (classToApply == "correct") {
       incrementScore(CORRECT_BONUS);
     } else {
-      window.location.assign("/");
+      window.location.assign("/end.html");
     }
     selectedChoice.parentElement.classList.add(classToApply);
     setTimeout(() => {
